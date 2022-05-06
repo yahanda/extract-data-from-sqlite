@@ -10,6 +10,7 @@ from azure.iot.device.aio import IoTHubModuleClient
 import sqlite3
 import os
 import json
+import datetime
 
 db_name = os.environ['DB_NAME'] if 'DB_NAME' in os.environ else 'sample_db.sqlite'
 db_path = os.path.join('/app/db/', db_name)
@@ -56,7 +57,7 @@ async def run_sample(client):
     while True:
         rows = db.execute(sql_statement).fetchall()
         results = json.dumps( [dict(ix) for ix in rows] ) # Create JSON
-        print(results)
+        print("{}: {}".format(datetime.now(), results))
         await client.send_message_to_output(results, "output1")
         await asyncio.sleep(interval_sec)
     
