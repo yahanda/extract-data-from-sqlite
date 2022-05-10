@@ -57,9 +57,9 @@ async def run_sample(client):
     while True:
         rows = db.execute(sql_statement).fetchall()
         results = json.dumps( [dict(ix) for ix in rows] ) # Create JSON
-        print("Sending message:" + results)
+        print("Sending message: " + results)
         await client.send_message_to_output(results, "output1")
-        print("Sleep for " + interval_sec + " sec")
+        print("Sleep for " + str(interval_sec) + " sec")
         await asyncio.sleep(interval_sec)
     
     conn.commit()
